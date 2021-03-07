@@ -33,7 +33,8 @@ void OnRxError(void);
 #define LED_BUILTIN 35
 #endif
 
-// Define LoRa parameters
+// Define LoRa parameters. To receive LoRa packets from BL602, sync the parameters with
+// https://github.com/lupyuen/bl_iot_sdk/blob/lora/customer_app/sdk_app_lora/sdk_app_lora/demo.c#L41-L77
 // TODO: Change RF_FREQUENCY for your region
 #define RF_FREQUENCY 923000000	// Hz
 #define TX_OUTPUT_POWER 22		// dBm
