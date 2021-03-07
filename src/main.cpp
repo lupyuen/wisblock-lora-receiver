@@ -34,7 +34,8 @@ void OnRxError(void);
 #endif
 
 // Define LoRa parameters
-#define RF_FREQUENCY 868300000	// Hz
+// TODO: Change RF_FREQUENCY for your region
+#define RF_FREQUENCY 923000000	// Hz
 #define TX_OUTPUT_POWER 22		// dBm
 #define LORA_BANDWIDTH 0		// [0: 125 kHz, 1: 250 kHz, 2: 500 kHz, 3: Reserved]
 #define LORA_SPREADING_FACTOR 7 // [SF7..SF12]
