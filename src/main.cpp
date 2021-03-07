@@ -81,10 +81,22 @@ void setup()
 	Radio.SetChannel(RF_FREQUENCY);
 
 	// Set Radio RX configuration
-	Radio.SetRxConfig(MODEM_LORA, LORA_BANDWIDTH, LORA_SPREADING_FACTOR,
-					  LORA_CODINGRATE, 0, LORA_PREAMBLE_LENGTH,
-					  LORA_SYMBOL_TIMEOUT, LORA_FIX_LENGTH_PAYLOAD_ON,
-					  0, true, 0, 0, LORA_IQ_INVERSION_ON, true);
+	Radio.SetRxConfig(
+		MODEM_LORA, 
+		LORA_BANDWIDTH, 
+		LORA_SPREADING_FACTOR,
+		LORA_CODINGRATE, 
+		0, 
+		LORA_PREAMBLE_LENGTH,
+		LORA_SYMBOL_TIMEOUT, 
+		LORA_FIX_LENGTH_PAYLOAD_ON,
+		0, 
+		true, 
+		0, 
+		0, 
+		LORA_IQ_INVERSION_ON, 
+		true
+	);
 
 	// Start LoRa
 	Serial.println("Starting Radio.Rx");
