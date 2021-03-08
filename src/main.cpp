@@ -119,17 +119,23 @@ void loop()
  */
 void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr)
 {
-	Serial.println("OnRxDone");
+    //  Show the timestamp in milliseconds
+  	Serial.print("OnRxDone: Timestamp=");
+    Serial.println(millis() / 1000);
 	delay(10);
 	memcpy(RcvBuffer, payload, size);
 
+    //  Show the signal strength, signal to noise ratio
 	Serial.printf("RssiValue=%d dBm, SnrValue=%d\n", rssi, snr);
 
+    //  Show the packet received
 	for (int idx = 0; idx < size; idx++)
 	{
 		Serial.printf("%02X ", RcvBuffer[idx]);
 	}
 	Serial.println("");
+
+    //  Receive the next packet
 	Radio.Rx(RX_TIMEOUT_VALUE);
 }
 
