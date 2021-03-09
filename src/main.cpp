@@ -79,28 +79,28 @@ void setup()
     // Initialize the Radio
     Radio.Init(&RadioEvents);
 
-    // Set Radio channel
+    // Set the LoRa Frequency
     Radio.SetChannel(RF_FREQUENCY);
 
-    // Set Radio RX configuration
+    //  Configure the LoRa Transceiver for receiving messages
     Radio.SetRxConfig(
         MODEM_LORA, 
         LORA_BANDWIDTH, 
         LORA_SPREADING_FACTOR,
         LORA_CODINGRATE, 
-        0, 
+        0,        //  AFC bandwidth: Unused with LoRa
         LORA_PREAMBLE_LENGTH,
         LORA_SYMBOL_TIMEOUT, 
         LORA_FIX_LENGTH_PAYLOAD_ON,
-        0, 
-        true, 
-        0, 
-        0, 
+        0,        //  Fixed payload length: N/A
+        true,     //  CRC enabled
+        0,        //  Frequency hopping disabled
+        0,        //  Hop period: N/A
         LORA_IQ_INVERSION_ON, 
-        true
+        true      //  Continuous receive mode
     );
 
-    // Start LoRa
+    // Start receiving LoRa packets
     Serial.println("Starting Radio.Rx");
     Radio.Rx(RX_TIMEOUT_VALUE);
 }
