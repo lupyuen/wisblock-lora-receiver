@@ -1,3 +1,4 @@
+//  Based on https://github.com/RAKWireless/WisBlock/blob/master/examples/communications/LoRa/LoRaP2P/LoRaP2P_RX/LoRaP2P_RX.ino
 /**
  * @file LoRaP2P_RX.ino
  * @author rakwireless.com
@@ -48,38 +49,37 @@ void OnRxError(void);
 #define RX_TIMEOUT_VALUE      3000
 #define TX_TIMEOUT_VALUE      3000
 
+// Callback Functions for LoRa Events
 static RadioEvents_t RadioEvents;
 
+// Buffer for received LoRa Packet
 static uint8_t RcvBuffer[64];
 
 void setup()
 {
 
-    // Initialize LoRa chip.
+    //  Initialize the LoRa Module
     lora_rak4630_init();
 
-    // Initialize Serial for debug output
+    //  Initialize the Serial Port for debug output
     Serial.begin(115200);
-    while (!Serial)
-    {
-        delay(10);
-    }
+    while (!Serial) { delay(10); }
     Serial.println("=====================================");
     Serial.println("LoRaP2P Rx Test");
     Serial.println("=====================================");
 
-    // Initialize the Radio callbacks
-    RadioEvents.TxDone = NULL;
-    RadioEvents.RxDone = OnRxDone;
+    //  Set the LoRa Callback Functions
+    RadioEvents.TxDone    = NULL;
+    RadioEvents.RxDone    = OnRxDone;
     RadioEvents.TxTimeout = NULL;
     RadioEvents.RxTimeout = OnRxTimeout;
-    RadioEvents.RxError = OnRxError;
-    RadioEvents.CadDone = NULL;
+    RadioEvents.RxError   = OnRxError;
+    RadioEvents.CadDone   = NULL;
 
-    // Initialize the Radio
+    //  Initialize the LoRa Radio
     Radio.Init(&RadioEvents);
 
-    // Set the LoRa Frequency
+    //  Set the LoRa Frequency
     Radio.SetChannel(RF_FREQUENCY);
 
     //  Configure the LoRa Transceiver for receiving messages
