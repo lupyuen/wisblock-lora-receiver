@@ -142,7 +142,7 @@ void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr)
  */
 void OnRxTimeout(void)
 {
-    //  We haven't received a packet in during the timeout period.
+    //  We haven't received a packet during the timeout period.
     //  We disable the timeout message because it makes the log much longer.
     //  Serial.println("OnRxTimeout");
 
