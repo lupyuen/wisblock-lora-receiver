@@ -119,14 +119,13 @@ void loop()
  */
 void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr)
 {
-    //  Show the timestamp in milliseconds
-    Serial.print("OnRxDone: Timestamp=");
-    Serial.println(millis() / 1000);
+    //  We have received a valid packet. Show the timestamp in milliseconds.
+    Serial.printf("OnRxDone: Timestamp=%d, ", millis() / 1000);
     delay(10);
     memcpy(RcvBuffer, payload, size);
 
     //  Show the signal strength, signal to noise ratio
-    Serial.printf("RssiValue=%d dBm, SnrValue=%d\n", rssi, snr);
+    Serial.printf("RssiValue=%d dBm, SnrValue=%d, Data=", rssi, snr);
 
     //  Show the packet received
     for (int idx = 0; idx < size; idx++)
@@ -143,7 +142,11 @@ void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr)
  */
 void OnRxTimeout(void)
 {
-    Serial.println("OnRxTimeout");
+    //  We haven't received a packet in during the timeout period.
+    //  We disable the timeout message because it makes the log much longer.
+    //  Serial.println("OnRxTimeout");
+
+    //  Receive the next packet
     Radio.Rx(RX_TIMEOUT_VALUE);
 }
 
@@ -151,6 +154,10 @@ void OnRxTimeout(void)
  */
 void OnRxError(void)
 {
-    Serial.println("OnRxError");
+    //  We have received a corrupted packet, probably due to weak signal.
+    //  Show the timestamp in milliseconds.
+    Serial.printf("OnRxError: Timestamp=%d\n", millis() / 1000);
+
+    //  Receive the next packet
     Radio.Rx(RX_TIMEOUT_VALUE);
 }
