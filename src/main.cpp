@@ -49,12 +49,13 @@ void OnRxError(void);
 #define RX_TIMEOUT_VALUE      3000
 #define TX_TIMEOUT_VALUE      3000
 
-// Callback Functions for LoRa Events
+//  Callback Functions for LoRa Events
 static RadioEvents_t RadioEvents;
 
-// Buffer for received LoRa Packet
+//  Buffer for received LoRa Packet
 static uint8_t RcvBuffer[64];
 
+//  Setup Function is called upon startup
 void setup()
 {
 
@@ -76,7 +77,7 @@ void setup()
     RadioEvents.RxError   = OnRxError;
     RadioEvents.CadDone   = NULL;
 
-    //  Initialize the LoRa Radio
+    //  Initialize the LoRa Transceiver
     Radio.Init(&RadioEvents);
 
     //  Set the LoRa Frequency
@@ -100,17 +101,18 @@ void setup()
         true      //  Continuous receive mode
     );
 
-    // Start receiving LoRa packets
+    //  Start receiving LoRa packets
     Serial.println("Starting Radio.Rx");
     Radio.Rx(RX_TIMEOUT_VALUE);
 }
 
+//  Loop Function is called repeatedly to handle events
 void loop()
 {
-    // Handle Radio events
+    //  Handle Radio events
     Radio.IrqProcess();
 
-    // We are on FreeRTOS, give other tasks a chance to run
+    //  We are on FreeRTOS, give other tasks a chance to run
     delay(100);
     yield();
 }
@@ -119,7 +121,7 @@ void loop()
  */
 void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr)
 {
-    //  We have received a valid packet. Show the timestamp in milliseconds.
+    //  We have received a valid packet. Show the timestamp in seconds.
     Serial.printf("OnRxDone: Timestamp=%d, ", millis() / 1000);
     delay(10);
     memcpy(RcvBuffer, payload, size);
@@ -155,7 +157,7 @@ void OnRxTimeout(void)
 void OnRxError(void)
 {
     //  We have received a corrupted packet, probably due to weak signal.
-    //  Show the timestamp in milliseconds.
+    //  Show the timestamp in seconds.
     Serial.printf("OnRxError: Timestamp=%d\n", millis() / 1000);
 
     //  Receive the next packet
